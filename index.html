@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Търсач на селища</title>
+   <link rel="stylesheet" href="styles.css">
+   <script src="places.js"></script>
+   <script src="main.js" defer></script>
+</head>
+
+<body>
+   <div id="searchBox">
+      <select id="modifierBox">
+         <option value="startsWith">Започва с</option>
+         <option value="endsWith">Завършва на</option>
+         <option value="contains">Съдържа</option>
+         <option value="match">Съвпада с</option>
+      </select>
+      <input id="inputField" type="text">
+      <button id="searchButton" type="button">Търси</button>
+   </div>
+   <div id="results">
+      <small id="numberOfResults"></small>
+      <ul id="places"></ul>
+   </div>
+</body>
+
+</html>
