@@ -1,3 +1,4 @@
+"use strict";
 const searchButton = document.querySelector("#searchButton");
 const input = document.querySelector("#inputField");
 const placesList = document.querySelector("#places");
@@ -29,12 +30,13 @@ searchButton.addEventListener("click", () => {
     for (const place of places) {
         if (eval(`place.name.toLowerCase()${checkCondition}`) === true) {
             const listEntry = document.createElement("li");
-            listEntry.textContent = `${place.name} (${place.oblast_name})`;
+            listEntry.textContent = `${place.type} ${place.name} (${place.oblast_name})`;
             placesList.append(listEntry);
             numberOfResults++;
         }
     }
-    numberOfResultsText.textContent = `${numberOfResults} резултата`;
+    // prettier-ignore
+    numberOfResultsText.textContent = numberOfResults === 1 ? `1 резултат` : `${numberOfResults} резултата`;
 });
 
 input.addEventListener("keypress", (event) => {
