@@ -13,22 +13,25 @@ searchButton.addEventListener("click", () => {
     let checkCondition = "";
     switch (modifierBox.value) {
         case "startsWith":
-            checkCondition = ".startsWith(input.value.toLowerCase())";
+            checkCondition = "place.name.toLowerCase().startsWith(input.value.toLowerCase())";
             break;
         case "endsWith":
-            checkCondition = ".endsWith(input.value.toLowerCase())";
+            checkCondition = "place.name.toLowerCase().endsWith(input.value.toLowerCase())";
             break;
         case "contains":
-            checkCondition = ".includes(input.value.toLowerCase())";
+            checkCondition = "place.name.toLowerCase().includes(input.value.toLowerCase())";
             break;
         case "match":
-            checkCondition = " === input.value.toLowerCase()";
+            checkCondition = "place.name.toLowerCase() === input.value.toLowerCase()";
+            break;
+        case "regex":
+            checkCondition = "new RegExp(input.value, 'gi').test(place.name.toLowerCase())";
             break;
     }
 
     let numberOfResults = 0;
     for (const place of places) {
-        if (eval(`place.name.toLowerCase()${checkCondition}`) === true) {
+        if (eval(checkCondition) === true) {
             const listEntry = document.createElement("li");
             listEntry.textContent = `${place.type} ${place.name} (${place.oblast_name})`;
             placesList.append(listEntry);
