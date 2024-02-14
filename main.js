@@ -1,12 +1,12 @@
 "use strict";
 const searchButton = document.getElementById("searchButton");
+const clearButton = document.getElementById("clearButton");
 const input = document.getElementById("inputField");
-const placesList = document.getElementById("places");
-const modifierBox = document.getElementById("modifierBox");
-const numberOfResultsText = document.getElementById("numberOfResults");
+const modifierSelector = document.getElementById("modifierSelector");
 const oblastSelector = document.getElementById("oblastSelector");
 const typeSelector = document.getElementById("typeSelector");
-const clearButton = document.getElementById("clearButton");
+const numberOfResults = document.getElementById("numberOfResults");
+const placesList = document.getElementById("places");
 
 searchButton.addEventListener("click", () => {
     if (placesList.childElementCount !== 0) {
@@ -17,7 +17,7 @@ searchButton.addEventListener("click", () => {
         const placeName = place.name.toLowerCase();
         const inputValue = input.value.toLowerCase();
         let checkName = false;
-        switch (modifierBox.value) {
+        switch (modifierSelector.value) {
             case "startsWith":
                 checkName = placeName.startsWith(inputValue);
                 break;
@@ -41,8 +41,7 @@ searchButton.addEventListener("click", () => {
                 checkOblast = true;
                 break;
             default:
-                checkOblast =
-                    place.oblast_name === "обл. " + oblastSelector.value;
+                checkOblast = place.oblast_name === "обл. " + oblastSelector.value;
                 break;
         }
 
@@ -61,14 +60,18 @@ searchButton.addEventListener("click", () => {
                 checkType = place.type === "ман.";
                 break;
         }
+
         if (checkType && checkName && checkOblast) {
             const listEntry = document.createElement("li");
             listEntry.textContent = `${place.type} ${place.name} (${place.oblast_name})`;
             placesList.append(listEntry);
         }
     }
-    // prettier-ignore
-    numberOfResultsText.textContent = placesList.childElementCount === 1 ? `1 резултат` : `${placesList.childElementCount} резултата`;
+
+    numberOfResults.textContent =
+        placesList.childElementCount === 1
+            ? `1 резултат`
+            : `${placesList.childElementCount} резултата`;
 });
 
 input.addEventListener("keypress", (event) => {
@@ -80,8 +83,8 @@ input.addEventListener("keypress", (event) => {
 clearButton.addEventListener("click", () => {
     oblastSelector.value = "all";
     typeSelector.value = "all";
-    modifierBox.value = "startsWith";
+    modifierSelector.value = "startsWith";
     input.value = "";
-    numberOfResultsText.textContent = "";
+    numberOfResults.textContent = "";
     Array.from(placesList.childNodes).forEach((e) => e.remove());
 });
