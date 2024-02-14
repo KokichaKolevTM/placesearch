@@ -13,6 +13,44 @@
 
 <body>
    <div id="searchBox">
+      <select id="oblastSelector">
+         <option value="all">Всички области</option>
+         <option>Благоевград</option>
+         <option>Бургас</option>
+         <option>Варна</option>
+         <option>Велико Търново</option>
+         <option>Видин</option>
+         <option>Враца</option>
+         <option>Габрово</option>
+         <option>Добрич</option>
+         <option>Кърджали</option>
+         <option>Кюстендил</option>
+         <option>Ловеч</option>
+         <option>Монтана</option>
+         <option>Пазарджик</option>
+         <option>Перник</option>
+         <option>Плевен</option>
+         <option>Пловдив</option>
+         <option>Разград</option>
+         <option>Русе</option>
+         <option>Силистра</option>
+         <option>Сливен</option>
+         <option>Смолян</option>
+         <option>София</option>
+         <option>София (столица)</option>
+         <option>Стара Загора</option>
+         <option>Търговище</option>
+         <option>Хасково</option>
+         <option>Шумен</option>
+         <option>Ямбол</option>
+      </select>
+      <select id="typeSelector">
+         <option value="all">Всички селища</option>
+         <option value="cities">Градове</option>
+         <option value="villages">Села</option>
+         <option value="monasteries">Манастирски селища</option>
+      </select>
+      <br>
       <select id="modifierBox">
          <option value="startsWith">Започва с</option>
          <option value="endsWith">Завършва на</option>
@@ -22,6 +60,7 @@
       </select>
       <input id="inputField" type="text">
       <button id="searchButton" type="button">Търси</button>
+      <button id="clearButton" type="button" style="display: none;">Изчисти</button>
    </div>
    <div id="results">
       <small id="numberOfResults"></small>

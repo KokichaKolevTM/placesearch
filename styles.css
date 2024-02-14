@@ -5,3 +5,11 @@
 #searchBox > * {
     margin-right: 6px;
 }
+
+#searchBox > br ~ * {
+    margin-top: 10px;
+}
+
+#clearButton {
+    margin-left: 25px;
+}

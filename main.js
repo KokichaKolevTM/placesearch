@@ -1,49 +1,87 @@
 "use strict";
-const searchButton = document.querySelector("#searchButton");
-const input = document.querySelector("#inputField");
-const placesList = document.querySelector("#places");
-const modifierBox = document.querySelector("#modifierBox");
-const numberOfResultsText = document.querySelector("#numberOfResults");
+const searchButton = document.getElementById("searchButton");
+const input = document.getElementById("inputField");
+const placesList = document.getElementById("places");
+const modifierBox = document.getElementById("modifierBox");
+const numberOfResultsText = document.getElementById("numberOfResults");
+const oblastSelector = document.getElementById("oblastSelector");
+const typeSelector = document.getElementById("typeSelector");
+const clearButton = document.getElementById("clearButton");
 
 searchButton.addEventListener("click", () => {
     if (placesList.childElementCount !== 0) {
         Array.from(placesList.childNodes).forEach((e) => e.remove());
     }
 
-    let checkCondition = "";
-    switch (modifierBox.value) {
-        case "startsWith":
-            checkCondition = "place.name.toLowerCase().startsWith(input.value.toLowerCase())";
-            break;
-        case "endsWith":
-            checkCondition = "place.name.toLowerCase().endsWith(input.value.toLowerCase())";
-            break;
-        case "contains":
-            checkCondition = "place.name.toLowerCase().includes(input.value.toLowerCase())";
-            break;
-        case "match":
-            checkCondition = "place.name.toLowerCase() === input.value.toLowerCase()";
-            break;
-        case "regex":
-            checkCondition = "new RegExp(input.value, 'gi').test(place.name.toLowerCase())";
-            break;
-    }
-
-    let numberOfResults = 0;
     for (const place of places) {
-        if (eval(checkCondition) === true) {
+        const placeName = place.name.toLowerCase();
+        const inputValue = input.value.toLowerCase();
+        let checkName = false;
+        switch (modifierBox.value) {
+            case "startsWith":
+                checkName = placeName.startsWith(inputValue);
+                break;
+            case "endsWith":
+                checkName = placeName.endsWith(inputValue);
+                break;
+            case "contains":
+                checkName = placeName.includes(inputValue);
+                break;
+            case "match":
+                checkName = placeName === inputValue;
+                break;
+            case "regex":
+                checkName = new RegExp(input.value, "gi").test(placeName);
+                break;
+        }
+
+        let checkOblast = false;
+        switch (oblastSelector.value) {
+            case "all":
+                checkOblast = true;
+                break;
+            default:
+                checkOblast =
+                    place.oblast_name === "обл. " + oblastSelector.value;
+                break;
+        }
+
+        let checkType = false;
+        switch (typeSelector.value) {
+            case "all":
+                checkType = true;
+                break;
+            case "cities":
+                checkType = place.type === "гр.";
+                break;
+            case "villages":
+                checkType = place.type === "с.";
+                break;
+            case "monasteries":
+                checkType = place.type === "ман.";
+                break;
+        }
+        if (checkType && checkName && checkOblast) {
             const listEntry = document.createElement("li");
             listEntry.textContent = `${place.type} ${place.name} (${place.oblast_name})`;
             placesList.append(listEntry);
-            numberOfResults++;
         }
     }
     // prettier-ignore
-    numberOfResultsText.textContent = numberOfResults === 1 ? `1 резултат` : `${numberOfResults} резултата`;
+    numberOfResultsText.textContent = placesList.childElementCount === 1 ? `1 резултат` : `${placesList.childElementCount} резултата`;
 });
 
 input.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         searchButton.click();
     }
+});
+
+clearButton.addEventListener("click", () => {
+    oblastSelector.value = "all";
+    typeSelector.value = "all";
+    modifierBox.value = "startsWith";
+    input.value = "";
+    numberOfResultsText.textContent = "";
+    Array.from(placesList.childNodes).forEach((e) => e.remove());
 });
