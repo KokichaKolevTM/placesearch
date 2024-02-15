@@ -7,9 +7,20 @@ const oblastSelector = document.getElementById("oblastSelector");
 const typeSelector = document.getElementById("typeSelector");
 const numberOfResults = document.getElementById("numberOfResults");
 const placesList = document.getElementById("places");
+const displayOblast = document.getElementById("displayOblast");
+const displayType = document.getElementById("displayType");
+// const objects = {
+//     searchButton: document.getElementById("searchButton"),
+//     clearButton: document.getElementById("clearButton"),
+//     input: document.getElementById("inputField"),
+//     modifierSelector: document.getElementById("modifierSelector"),
+//     searchButton: document.getElementById("searchButton"),
+//     searchButton: document.getElementById("searchButton"),
+//     searchButton: document.getElementById("searchButton"),
+// }
 
 searchButton.addEventListener("click", () => {
-    if (placesList.childElementCount !== 0) {
+    if (placesList.childElementCount > 0) {
         Array.from(placesList.childNodes).forEach((e) => e.remove());
     }
 
@@ -63,14 +74,24 @@ searchButton.addEventListener("click", () => {
 
         if (checkType && checkName && checkOblast) {
             const listEntry = document.createElement("li");
-            listEntry.textContent = `${place.type} ${place.name} (${place.oblast_name})`;
+            let assembledString = "";
+            if (displayType.checked) {
+                assembledString += `${place.type} `;
+            }
+            assembledString += place.name;
+            if (displayOblast.checked) {
+                assembledString += ` (${place.oblast_name})`;
+            }
+            listEntry.innerHTML =
+                assembledString +
+                `<a href="https://bg.wikipedia.org/wiki/${place.name}" target="_blank"><img src="wikipedia.ico"></a>`;
             placesList.append(listEntry);
         }
     }
 
     numberOfResults.textContent =
         placesList.childElementCount === 1
-            ? `1 резултат`
+            ? "1 резултат"
             : `${placesList.childElementCount} резултата`;
 });
 
@@ -81,10 +102,12 @@ input.addEventListener("keypress", (event) => {
 });
 
 clearButton.addEventListener("click", () => {
-    oblastSelector.value = "all";
-    typeSelector.value = "all";
-    modifierSelector.value = "startsWith";
+    oblastSelector.value = oblastSelector.firstElementChild.value;
+    typeSelector.value = typeSelector.firstElementChild.value;
+    modifierSelector.value = modifierSelector.firstElementChild.value;
     input.value = "";
+    displayOblast.checked = displayOblast.attributes["checked"] ? true : false;
+    displayType.checked = displayType.attributes["checked"] ? true : false;
     numberOfResults.textContent = "";
     Array.from(placesList.childNodes).forEach((e) => e.remove());
 });

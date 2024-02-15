@@ -13,3 +13,10 @@
 #clearButton {
     margin-left: 25px;
 }
+
+img[src="wikipedia.ico"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    margin-left: 7px;
+}
