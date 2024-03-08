@@ -5,28 +5,23 @@ const input = document.getElementById("inputField");
 const modifierSelector = document.getElementById("modifierSelector");
 const oblastSelector = document.getElementById("oblastSelector");
 const typeSelector = document.getElementById("typeSelector");
+const obshtinaSelector = document.getElementById("obshtinaSelector");
 const numberOfResults = document.getElementById("numberOfResults");
 const placesList = document.getElementById("places");
 const displayOblast = document.getElementById("displayOblast");
 const displayType = document.getElementById("displayType");
-// const objects = {
-//     searchButton: document.getElementById("searchButton"),
-//     clearButton: document.getElementById("clearButton"),
-//     input: document.getElementById("inputField"),
-//     modifierSelector: document.getElementById("modifierSelector"),
-//     searchButton: document.getElementById("searchButton"),
-//     searchButton: document.getElementById("searchButton"),
-//     searchButton: document.getElementById("searchButton"),
-// }
+const displayWiki = document.getElementById("displayWiki");
+const displayDuplicates = document.getElementById("displayDuplicates");
 
 searchButton.addEventListener("click", () => {
     if (placesList.childElementCount > 0) {
-        Array.from(placesList.childNodes).forEach((e) => e.remove());
+        placesList.innerHTML = "";
     }
 
     for (const place of places) {
         const placeName = place.name.toLowerCase();
         const inputValue = input.value.toLowerCase();
+
         let checkName = false;
         switch (modifierSelector.value) {
             case "startsWith":
@@ -72,7 +67,37 @@ searchButton.addEventListener("click", () => {
                 break;
         }
 
-        if (checkType && checkName && checkOblast) {
+        let checkObshtina = false;
+        switch (obshtinaSelector.value) {
+            case "all":
+                checkObshtina = true;
+                break;
+            default:
+                checkObshtina = place.obshtina_name === obshtinaSelector.value;
+                break;
+        }
+
+        if (checkType && checkName && checkOblast && checkObshtina) {
+            let checkDuplicate = false;
+            if (displayDuplicates.checked) {
+                let duplicateCount = 0;
+                for (const place2 of places) {
+                    if (duplicateCount >= 2) {
+                        checkDuplicate = true;
+                        break;
+                    }
+                    if (placeName === place2.name.toLowerCase()) {
+                        duplicateCount++;
+                    }
+                }
+            } else {
+                checkDuplicate = true;
+            }
+
+            if (!checkDuplicate) {
+                continue;
+            }
+
             const listEntry = document.createElement("li");
             let assembledString = "";
             if (displayType.checked) {
@@ -82,9 +107,10 @@ searchButton.addEventListener("click", () => {
             if (displayOblast.checked) {
                 assembledString += ` (${place.oblast_name})`;
             }
-            listEntry.innerHTML =
-                assembledString +
-                `<a href="https://bg.wikipedia.org/wiki/${place.name}" target="_blank"><img src="wikipedia.ico"></a>`;
+            listEntry.textContent = assembledString;
+            if (displayWiki.checked) {
+                listEntry.innerHTML += `<a href="https://bg.wikipedia.org/wiki/${place.name}" target="_blank"><img src="wikipedia.ico"></a>`;
+            }
             placesList.append(listEntry);
         }
     }
@@ -95,19 +121,45 @@ searchButton.addEventListener("click", () => {
             : `${placesList.childElementCount} резултата`;
 });
 
-input.addEventListener("keypress", (event) => {
+// testing with body instead of input
+document.body.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         searchButton.click();
     }
 });
 
+oblastSelector.addEventListener("change", () => {
+    obshtinaSelector.innerHTML = "<option value='all'>Всички общини</option>";
+    if (oblastSelector.value === "all") {
+        return;
+    }
+    const obshtinas = new Set(
+        places
+            .filter((place) => {
+                if (place.oblast_name === "обл. " + oblastSelector.value) {
+                    return true;
+                }
+                return false;
+            })
+            .map((place) => place.obshtina_name)
+    );
+    for (const obshtina of obshtinas) {
+        const option = document.createElement("option");
+        option.textContent = obshtina;
+        obshtinaSelector.append(option);
+    }
+});
+
 clearButton.addEventListener("click", () => {
-    oblastSelector.value = oblastSelector.firstElementChild.value;
-    typeSelector.value = typeSelector.firstElementChild.value;
-    modifierSelector.value = modifierSelector.firstElementChild.value;
     input.value = "";
-    displayOblast.checked = displayOblast.attributes["checked"] ? true : false;
-    displayType.checked = displayType.attributes["checked"] ? true : false;
-    numberOfResults.textContent = "";
-    Array.from(placesList.childNodes).forEach((e) => e.remove());
+    for (const selector of document.querySelectorAll("#searchBox select[id]")) {
+        selector.value = selector.firstElementChild.value;
+    }
+    obshtinaSelector.innerHTML = "<option value='all'>Всички общини</option>";
+    for (const checkBox of document.querySelectorAll("#searchBox input[type='checkbox']")) {
+        checkBox.checked = checkBox.attributes.checked ? true : false;
+    }
+    for (const el of document.querySelectorAll("#results > *")) {
+        el.innerHTML = "";
+    }
 });

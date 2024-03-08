@@ -44,6 +44,9 @@
          <option>Шумен</option>
          <option>Ямбол</option>
       </select>
+      <select id="obshtinaSelector">
+         <option value="all">Всички общини</option>
+      </select>
       <select id="typeSelector">
          <option value="all">Всички селища</option>
          <option value="cities">Градове</option>
@@ -60,12 +63,18 @@
       </select>
       <input id="inputField" type="text" placeholder="Въведи текст">
       <button id="searchButton" type="button">Търси</button>
-      <button id="clearButton" type="button" title="Изчиства всички полета и връща настройките по подразбиране">Изчисти всичко</button>
+      <button id="clearButton" type="reset" title="Изчиства всички полета и връща настройките по подразбиране">Изчисти
+         всичко</button>
       <br>
       <input id="displayType" type="checkbox" checked>
       <label for="displayType">Отпечатване на типа</label>
       <input id="displayOblast" type="checkbox" checked>
       <label for="displayOblast">Отпечатване на областта</label>
+      <input id="displayWiki" type="checkbox" checked>
+      <label for="displayWiki">Отпечатване на връзка към Уикипедия</label>
+      <br>
+      <input id="displayDuplicates" type="checkbox">
+      <label for="displayDuplicates">Отпечатване САМО на селища с дублиращи се имена</label>
    </div>
    <div id="results">
       <small id="numberOfResults"></small>
