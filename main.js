@@ -81,14 +81,11 @@ searchButton.addEventListener("click", () => {
         if (checkType && checkName && checkOblast && checkObshtina) {
             let checkDuplicate = false;
             if (displayDuplicates.checked) {
-                const check =
+                checkDuplicate =
                     i + 1 === places.length
                         ? placeName === places[i - 1].name.toLowerCase()
                         : placeName === places[i + 1].name.toLowerCase() ||
                           placeName === places[i - 1].name.toLowerCase();
-                if (check) {
-                    checkDuplicate = true;
-                }
             } else {
                 checkDuplicate = true;
             }
