@@ -23,6 +23,22 @@ searchButton.addEventListener("click", () => {
         const placeName = place.name.toLowerCase();
         const inputValue = input.value.toLowerCase();
 
+        let checkType = false;
+        switch (typeSelector.value) {
+            case "all":
+                checkType = true;
+                break;
+            case "cities":
+                checkType = place.type === "гр.";
+                break;
+            case "villages":
+                checkType = place.type === "с.";
+                break;
+            case "monasteries":
+                checkType = place.type === "ман.";
+                break;
+        }
+
         let checkName = false;
         switch (modifierSelector.value) {
             case "startsWith":
@@ -48,23 +64,7 @@ searchButton.addEventListener("click", () => {
                 checkOblast = true;
                 break;
             default:
-                checkOblast = place.oblast_name === "обл. " + oblastSelector.value;
-                break;
-        }
-
-        let checkType = false;
-        switch (typeSelector.value) {
-            case "all":
-                checkType = true;
-                break;
-            case "cities":
-                checkType = place.type === "гр.";
-                break;
-            case "villages":
-                checkType = place.type === "с.";
-                break;
-            case "monasteries":
-                checkType = place.type === "ман.";
+                checkOblast = place.oblast_name === oblastSelector.value;
                 break;
         }
 
@@ -79,15 +79,13 @@ searchButton.addEventListener("click", () => {
         }
 
         if (checkType && checkName && checkOblast && checkObshtina) {
-            let checkDuplicate = false;
+            let checkDuplicate = true;
             if (displayDuplicates.checked) {
                 checkDuplicate =
                     i + 1 === places.length
                         ? placeName === places[i - 1].name.toLowerCase()
                         : placeName === places[i + 1].name.toLowerCase() ||
                           placeName === places[i - 1].name.toLowerCase();
-            } else {
-                checkDuplicate = true;
             }
 
             if (!checkDuplicate) {
@@ -101,7 +99,7 @@ searchButton.addEventListener("click", () => {
             }
             assembledString += place.name;
             if (displayOblast.checked) {
-                assembledString += ` (${place.oblast_name})`;
+                assembledString += ` (обл. ${place.oblast_name})`;
             }
             listEntry.textContent = assembledString;
             if (displayWiki.checked) {
@@ -130,7 +128,7 @@ oblastSelector.addEventListener("change", () => {
     }
     const obshtinas = new Set(
         places
-            .filter((place) => place.oblast_name === "обл. " + oblastSelector.value)
+            .filter((place) => place.oblast_name === oblastSelector.value)
             .map((place) => place.obshtina_name)
     );
     for (const obshtina of obshtinas) {
