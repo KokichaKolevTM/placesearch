@@ -90,7 +90,11 @@ searchButton.addEventListener("click", () => {
             }
             listEntry.textContent = assembledString;
             if (displayWiki.checked) {
-                listEntry.innerHTML += `<a href="https://bg.wikipedia.org/wiki/${place.name}" target="_blank"><img src="wikipedia.ico"></a>`;
+                const wikiLink = document.createElement("a");
+                wikiLink.href = `https://bg.wikipedia.org/wiki/${place.name}`;
+                wikiLink.target = "_blank";
+                wikiLink.innerHTML = '<img src="wikipedia.ico">';
+                listEntry.append(wikiLink);
             }
             placesList.append(listEntry);
         }
@@ -128,18 +132,17 @@ searchButton.addEventListener("click", () => {
 });
 
 input.addEventListener("keydown", (event) => {
-    console.log(event);
     if (event.key === "Enter") {
         searchButton.click();
-    } 
+    }
     // else if (
-        // /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
-        // event.ctrlKey === false &&
-        // event.altKey === false &&
-        // event.metaKey === false
+    // /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
+    // event.ctrlKey === false &&
+    // event.altKey === false &&
+    // event.metaKey === false
     // ) {
-        // input.value += keyMatches[event.key.toLowerCase()];
-        // event.preventDefault();
+    // input.value += keyMatches[event.key.toLowerCase()];
+    // event.preventDefault();
     // }
 });
 
@@ -152,6 +155,7 @@ oblastSelector.addEventListener("change", () => {
         places
             .filter((place) => place.oblast_name === oblastSelector.value)
             .map((place) => place.obshtina_name)
+            .toSorted()
     );
     for (const obshtina of obshtinas) {
         const option = document.createElement("option");
