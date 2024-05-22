@@ -1,3 +1,11 @@
+/* #searchBox {
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+} */
+
 #places {
     margin-top: 0;
 }

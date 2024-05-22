@@ -1,17 +1,4 @@
 "use strict";
-const searchButton = document.getElementById("searchButton");
-const clearButton = document.getElementById("clearButton");
-const input = document.getElementById("inputField");
-const modifierSelector = document.getElementById("modifierSelector");
-const oblastSelector = document.getElementById("oblastSelector");
-const typeSelector = document.getElementById("typeSelector");
-const obshtinaSelector = document.getElementById("obshtinaSelector");
-const numberOfResults = document.getElementById("numberOfResults");
-const placesList = document.getElementById("places");
-const displayOblast = document.getElementById("displayOblast");
-const displayType = document.getElementById("displayType");
-const displayWiki = document.getElementById("displayWiki");
-const displayDuplicates = document.getElementById("displayDuplicates");
 
 searchButton.addEventListener("click", () => {
     if (placesList.childElementCount > 0) {
@@ -82,7 +69,7 @@ searchButton.addEventListener("click", () => {
             let checkDuplicate = true;
             if (displayDuplicates.checked) {
                 checkDuplicate =
-                    i + 1 === places.length
+                    i === places.length - 1
                         ? placeName === places[i - 1].name.toLowerCase()
                         : placeName === places[i + 1].name.toLowerCase() ||
                           placeName === places[i - 1].name.toLowerCase();
@@ -113,12 +100,47 @@ searchButton.addEventListener("click", () => {
         placesList.childElementCount === 1
             ? "1 резултат"
             : `${placesList.childElementCount} резултата`;
+
+    const percentOfTotal = ((placesList.childElementCount / places.length) * 100).toFixed(2);
+    numberOfResults.textContent += ` (${percentOfTotal}% в страната`;
+
+    if (oblastSelector.value != "all") {
+        const percentOfOblast = (
+            (placesList.childElementCount /
+                places.filter((e) => e.oblast_name === oblastSelector.value).length) *
+            100
+        ).toFixed(2);
+        numberOfResults.textContent += `, ${percentOfOblast}% в областта`;
+    }
+    if (obshtinaSelector.value != "all") {
+        const percentOfObshtina = (
+            (placesList.childElementCount /
+                places.filter(
+                    (e) =>
+                        e.oblast_name === oblastSelector.value &&
+                        e.obshtina_name === obshtinaSelector.value
+                ).length) *
+            100
+        ).toFixed(2);
+        numberOfResults.textContent += `, ${percentOfObshtina}% в общината`;
+    }
+    numberOfResults.textContent += ")";
 });
 
-input.addEventListener("keypress", (event) => {
+input.addEventListener("keydown", (event) => {
+    console.log(event);
     if (event.key === "Enter") {
         searchButton.click();
-    }
+    } 
+    // else if (
+        // /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
+        // event.ctrlKey === false &&
+        // event.altKey === false &&
+        // event.metaKey === false
+    // ) {
+        // input.value += keyMatches[event.key.toLowerCase()];
+        // event.preventDefault();
+    // }
 });
 
 oblastSelector.addEventListener("change", () => {

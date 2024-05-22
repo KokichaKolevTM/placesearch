@@ -8,6 +8,7 @@
    <title>Търсач на селища</title>
    <link rel="stylesheet" href="styles.css">
    <script src="places.js"></script>
+   <script src="global_vars.js" defer></script>
    <script src="main.js" defer></script>
 </head>
 
@@ -68,17 +69,35 @@
       <br>
       <input id="displayType" type="checkbox" checked>
       <label for="displayType">Отпечатване на типа</label>
+
       <input id="displayOblast" type="checkbox" checked>
       <label for="displayOblast">Отпечатване на областта</label>
+
       <input id="displayWiki" type="checkbox" checked>
       <label for="displayWiki">Отпечатване на връзка към Уикипедия</label>
       <br>
+
       <input id="displayDuplicates" type="checkbox">
       <label for="displayDuplicates">Отпечатване САМО на селища с дублиращи се имена</label>
+
+      <!-- <fieldset style="width: fit-content;">
+         <legend>Избери:</legend>
+         <input id="" type="radio" checked>
+         <label for="">Отпечатване всички селища</label>
+         <br>
+
+         <input id="" type="radio">
+         <label for="">Отпечатване САМО на селища с дублиращи се имена (глобално)</label>
+         <br>
+
+         <input id="" type="radio">
+         <label for="">Отпечатване САМО на селища с дублиращи се имена (локално)</label>
+      </fieldset> -->
    </div>
    <div id="results">
       <small id="numberOfResults"></small>
       <ul id="places"></ul>
+      
    </div>
 </body>
 
