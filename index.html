@@ -14,90 +14,91 @@
 
 <body>
    <div id="searchBox">
-      <select id="oblastSelector">
-         <option value="all">Всички области</option>
-         <option>Благоевград</option>
-         <option>Бургас</option>
-         <option>Варна</option>
-         <option>Велико Търново</option>
-         <option>Видин</option>
-         <option>Враца</option>
-         <option>Габрово</option>
-         <option>Добрич</option>
-         <option>Кърджали</option>
-         <option>Кюстендил</option>
-         <option>Ловеч</option>
-         <option>Монтана</option>
-         <option>Пазарджик</option>
-         <option>Перник</option>
-         <option>Плевен</option>
-         <option>Пловдив</option>
-         <option>Разград</option>
-         <option>Русе</option>
-         <option>Силистра</option>
-         <option>Сливен</option>
-         <option>Смолян</option>
-         <option>София</option>
-         <option>София (столица)</option>
-         <option>Стара Загора</option>
-         <option>Търговище</option>
-         <option>Хасково</option>
-         <option>Шумен</option>
-         <option>Ямбол</option>
-      </select>
-      <select id="obshtinaSelector">
-         <option value="all">Всички общини</option>
-      </select>
-      <select id="typeSelector">
-         <option value="all">Всички селища</option>
-         <option value="cities">Градове</option>
-         <option value="villages">Села</option>
-         <option value="monasteries">Манастирски селища</option>
-      </select>
-      <br>
-      <select id="modifierSelector">
-         <option value="contains">Съдържа</option>
-         <option value="startsWith">Започва с</option>
-         <option value="endsWith">Завършва на</option>
-         <option value="match">Съвпада с</option>
-         <option value="regex">Рег. израз</option>
-      </select>
-      <input id="inputField" type="text" placeholder="Въведи текст">
-      <button id="searchButton" type="button">Търси</button>
-      <button id="clearButton" type="reset" title="Изчиства всички полета и връща настройките по подразбиране">Изчисти
-         всичко</button>
-      <br>
-      <input id="displayType" type="checkbox" checked>
-      <label for="displayType">Отпечатване на типа</label>
+      <section class="flex-container">
+         <select id="mainOblastSelector" class="oblastSelector">
+            <option value="all">Всички области</option>
+            <option>Благоевград</option>
+            <option>Бургас</option>
+            <option>Варна</option>
+            <option>Велико Търново</option>
+            <option>Видин</option>
+            <option>Враца</option>
+            <option>Габрово</option>
+            <option>Добрич</option>
+            <option>Кърджали</option>
+            <option>Кюстендил</option>
+            <option>Ловеч</option>
+            <option>Монтана</option>
+            <option>Пазарджик</option>
+            <option>Перник</option>
+            <option>Плевен</option>
+            <option>Пловдив</option>
+            <option>Разград</option>
+            <option>Русе</option>
+            <option>Силистра</option>
+            <option>Сливен</option>
+            <option>Смолян</option>
+            <option>София</option>
+            <option>София (столица)</option>
+            <option>Стара Загора</option>
+            <option>Търговище</option>
+            <option>Хасково</option>
+            <option>Шумен</option>
+            <option>Ямбол</option>
+         </select>
+         <select id="mainObshtinaSelector">
+            <option value="all">Всички общини</option>
+         </select>
+         <select id="mainTypeSelector">
+            <option value="all">Всички селища</option>
+            <option value="cities">Градове</option>
+            <option value="villages">Села</option>
+            <option value="monasteries">Манастирски селища</option>
+         </select>
+      </section>
 
-      <input id="displayOblast" type="checkbox" checked>
-      <label for="displayOblast">Отпечатване на областта</label>
+      <section class="flex-container">
+         <select id="modifierSelector">
+            <option value="includes">Съдържа</option>
+            <option value="startsWith">Започва с</option>
+            <option value="endsWith">Завършва на</option>
+            <option value="match">Съвпада с</option>
+            <option value="regex">Рег. израз</option>
+         </select>
+         <input id="inputField" type="text" placeholder="Въведи текст">
+         <button id="searchButton" type="button">Търси</button>
+         <button id="clearButton" type="reset"
+            title="Изчиства всички полета и връща настройките по подразбиране">Изчисти
+            всичко</button>
+      </section>
 
-      <input id="displayWiki" type="checkbox" checked>
-      <label for="displayWiki">Отпечатване на връзка към Уикипедия</label>
-      <br>
+      <fieldset id="options">
+         <legend>Опции</legend>
+         <div id="typeCheckbox">
+            <input id="displayType" type="checkbox" checked>
+            <label for="displayType">Отпечатване на типа</label>
+         </div>
 
-      <input id="displayDuplicates" type="checkbox">
-      <label for="displayDuplicates">Отпечатване САМО на селища с дублиращи се имена</label>
+         <div id="oblastCheckbox">
+            <input id="displayOblast" type="checkbox" checked>
+            <label for="displayOblast">Отпечатване на областта</label>
+         </div>
 
-      <!-- <fieldset style="width: fit-content;">
-         <legend>Избери:</legend>
-         <input id="" type="radio" checked>
-         <label for="">Отпечатване всички селища</label>
-         <br>
+         <div id="wikiCheckbox">
+            <input id="displayWiki" type="checkbox" checked>
+            <label for="displayWiki">Отпечатване на връзка към Уикипедия</label>
+         </div>
 
-         <input id="" type="radio">
-         <label for="">Отпечатване САМО на селища с дублиращи се имена (глобално)</label>
-         <br>
+         <div id="duplicatesCheckbox">
+            <input id="displayDuplicates" type="checkbox">
+            <label for="displayDuplicates">Отпечатване САМО на селища с дублиращи се имена</label>
+         </div>
+      </fieldset>
 
-         <input id="" type="radio">
-         <label for="">Отпечатване САМО на селища с дублиращи се имена (локално)</label>
-      </fieldset> -->
    </div>
    <div id="results">
       <small id="numberOfResults"></small>
       <ul id="places"></ul>
-      
    </div>
 </body>
 

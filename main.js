@@ -34,14 +34,14 @@ searchButton.addEventListener("click", () => {
             case "endsWith":
                 checkName = placeName.endsWith(inputValue);
                 break;
-            case "contains":
+            case "includes":
                 checkName = placeName.includes(inputValue);
                 break;
             case "match":
                 checkName = placeName === inputValue;
                 break;
             case "regex":
-                checkName = new RegExp(input.value, "gi").test(placeName);
+                checkName = new RegExp(input.value, "i").test(placeName);
                 break;
         }
 
@@ -134,23 +134,27 @@ searchButton.addEventListener("click", () => {
 input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         searchButton.click();
+    } else if (
+        /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
+        event.ctrlKey === false &&
+        event.altKey === false &&
+        event.metaKey === false &&
+        modifierSelector.value !== "regex"
+    ) {
+        input.value += keyMatches[event.key.toLowerCase()];
+        event.preventDefault();
     }
-    // else if (
-    // /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
-    // event.ctrlKey === false &&
-    // event.altKey === false &&
-    // event.metaKey === false
-    // ) {
-    // input.value += keyMatches[event.key.toLowerCase()];
-    // event.preventDefault();
-    // }
 });
 
 oblastSelector.addEventListener("change", () => {
-    obshtinaSelector.innerHTML = "<option value='all'>Всички общини</option>";
+    while (obshtinaSelector.childElementCount > 1) {
+        obshtinaSelector.lastChild.remove();
+    }
+
     if (oblastSelector.value === "all") {
         return;
     }
+
     const obshtinas = new Set(
         places
             .filter((place) => place.oblast_name === oblastSelector.value)
@@ -166,14 +170,35 @@ oblastSelector.addEventListener("change", () => {
 
 clearButton.addEventListener("click", () => {
     input.value = "";
-    for (const select of document.querySelectorAll("#searchBox select[id]")) {
+    for (const select of $$("#searchBox select[id]")) {
         select.value = select.firstElementChild.value;
     }
-    obshtinaSelector.innerHTML = "<option value='all'>Всички общини</option>";
-    for (const checkBox of document.querySelectorAll("#searchBox input[type='checkbox']")) {
-        checkBox.checked = checkBox.attributes.checked ? true : false;
+
+    while (obshtinaSelector.childElementCount > 1) {
+        obshtinaSelector.lastChild.remove();
     }
-    for (const el of document.querySelectorAll("#results > *")) {
-        el.innerHTML = "";
+
+    for (const checkBox of $$("#searchBox input[type='checkbox']")) {
+        checkBox.checked = Boolean(checkBox.attributes.checked);
+    }
+
+    for (const elem of $$("#results > *")) {
+        elem.innerHTML = "";
     }
 });
+
+// addOblast.addEventListener("click", () => {
+//     const oblastSelector = document.createElement("select");
+//     oblastSelector.classList.add("oblastSelector");
+//     oblasts.forEach((oblast) => {
+//         const option = document.createElement("option");
+//         option.textContent = oblast;
+//         oblastSelector.append(option);
+//     });
+
+//     const obshtinaSelector = document.createElement("select");
+//     obshtinaSelector.classList.add("obshtinaSelector");
+
+//     // $("#br1").after(select);
+//     // select.after(document.createElement("br"));
+// });

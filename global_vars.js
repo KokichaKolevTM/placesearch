@@ -1,19 +1,20 @@
 "use strict";
-const $ = (s) => document.getElementById(s);
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
 
-const searchButton = $("searchButton");
-const clearButton = $("clearButton");
-const input = $("inputField");
-const modifierSelector = $("modifierSelector");
-const oblastSelector = $("oblastSelector");
-const typeSelector = $("typeSelector");
-const obshtinaSelector = $("obshtinaSelector");
-const numberOfResults = $("numberOfResults");
-const placesList = $("places");
-const displayOblast = $("displayOblast");
-const displayType = $("displayType");
-const displayWiki = $("displayWiki");
-const displayDuplicates = $("displayDuplicates");
+const searchButton = $("#searchButton");
+const clearButton = $("#clearButton");
+const input = $("#inputField");
+const modifierSelector = $("#modifierSelector");
+const oblastSelector = $("#mainOblastSelector");
+const typeSelector = $("#mainTypeSelector");
+const obshtinaSelector = $("#mainObshtinaSelector");
+const numberOfResults = $("#numberOfResults");
+const placesList = $("#places");
+const displayOblast = $("#displayOblast");
+const displayType = $("#displayType");
+const displayWiki = $("#displayWiki");
+const displayDuplicates = $("#displayDuplicates");
 
 const keyMatches = {
     a: "а",
@@ -47,3 +48,5 @@ const keyMatches = {
     "]": "щ",
     "\\": "ь",
 };
+
+const oblasts = new Set(places.map((place) => place.oblast_name).toSorted());
