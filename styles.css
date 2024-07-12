@@ -8,8 +8,31 @@ body {
     background-color: #f2f2f2;
 }
 
-#places {
-    margin-top: 3px;
+#placesList {
+    margin-top: 0.4rem;
+    border-collapse: collapse;
+    letter-spacing: 0.3px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+#placesList th,
+td {
+    border: 1px solid black;
+    padding: 0.5rem 0.625rem;
+}
+
+#placesList .wiki_link {
+    text-align: center;
+}
+
+#placesList tr:has(> th) {
+    background-color: rgb(218, 223, 228);
+}
+
+#placesList tr:has(> td):nth-of-type(even) {
+    background-color: rgb(233, 233, 238);
 }
 
 .flex-container {
@@ -17,8 +40,8 @@ body {
     width: fit-content;
     flex-direction: row;
     justify-content: start;
-    gap: 14px;
-    margin-bottom: 12px;
+    gap: 0.875rem;
+    margin-bottom: 0.75rem;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -26,11 +49,13 @@ body {
 #options {
     display: flex;
     flex-direction: column;
-    width: fit-content;
     align-items: flex-start;
-    gap: 7px;
-    margin-bottom: 9px;
+    width: fit-content;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
     border-radius: 10px;
+    border: 1.5px solid #9b9b9e;
+    /* padding: 0.8rem; */
 }
 
 #options label[for] {
@@ -46,14 +71,13 @@ button {
     color: white;
     text-align: center;
     text-decoration: none;
-    border: 0;
+    border: none;
     border-radius: 20px;
     background-color: #0a66c2;
-    padding: 11px;
+    padding: 0.75rem;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-        box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
         color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
@@ -73,29 +97,31 @@ button:disabled {
 }
 
 #clearButton {
-    margin-left: 25px;
+    margin-left: 1.55rem;
 }
 
-img[src="wikipedia.ico"] {
-    width: 20px;
-    height: 20px;
-    border-radius: 6px;
-    border-width: 2px;
-    margin-left: 7px;
+.wiki_link img {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 5px;
+    background-color: white;
+    padding: 0.1rem;
+    border: 1px solid rgba(0, 0, 0, 45%);
 }
 
 #inputField {
     border: 1.5px solid #cac2c2;
     border-radius: 7px;
-    padding: 6px 8px;
+    padding: 0.375rem 0.5rem;
     background-color: white;
     appearance: none;
+    width: clamp(140px, 12vw, 200px);
 }
 
 input[type="checkbox"] {
     accent-color: hsl(212, 58%, 39%);
-    width: 17px;
-    height: 17px;
+    width: 1.05rem;
+    height: 1.05rem;
 }
 
 input[type="checkbox"]:hover {
@@ -105,3 +131,20 @@ input[type="checkbox"]:hover {
 input[type="checkbox"]:active {
     accent-color: hsl(212, 58%, 19%);
 }
+
+/* select[id] {
+    appearance: none;
+    padding: 0.4rem 2.5rem 0.4rem 0.7rem;
+    background-color: white;
+    border: 1.5px solid #cac2c2;
+    border-radius: 7px;
+    color: black;
+}
+
+select:hover {
+    background-color: hsl(0, 0%, 90%);
+}
+
+select:active {
+    background-color: hsl(0, 0%, 80%);
+} */

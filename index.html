@@ -62,7 +62,7 @@
             <option value="includes">Съдържа</option>
             <option value="startsWith">Започва с</option>
             <option value="endsWith">Завършва на</option>
-            <option value="match">Съвпада с</option>
+            <option value="matches">Съвпада с</option>
             <option value="regex">Рег. израз</option>
          </select>
          <input id="inputField" type="text" placeholder="Въведи текст">
@@ -98,7 +98,19 @@
    </div>
    <div id="results">
       <small id="numberOfResults"></small>
-      <ul id="places"></ul>
+      <table id="placesList" style="display: none;">
+         <thead>
+            <tr>
+               <th class="number">No</th>
+               <th class="type">Тип</th>
+               <th class="name">Име</th>
+               <th class="obshtina_name">Община</th>
+               <th class="oblast_name">Област</th>
+               <th class="height">Надморска височина (м.)</th>
+               <th class="wiki_link">Връзка</th>
+            </tr>
+         </thead>
+      </table>
    </div>
 </body>
 

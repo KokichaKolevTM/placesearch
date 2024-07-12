@@ -1,16 +1,17 @@
 "use strict";
 
 searchButton.addEventListener("click", () => {
-    if (placesList.childElementCount > 0) {
-        placesList.innerHTML = "";
+    while (placesList.childElementCount > 1) {
+        placesList.lastChild.remove();
     }
 
+    let matchedNumber = 0;
     for (let i = 0; i < places.length; i++) {
         const place = places[i];
         const placeName = place.name.toLowerCase();
         const inputValue = input.value.toLowerCase();
 
-        let checkType = false;
+        let checkType;
         switch (typeSelector.value) {
             case "all":
                 checkType = true;
@@ -26,7 +27,7 @@ searchButton.addEventListener("click", () => {
                 break;
         }
 
-        let checkName = false;
+        let checkName;
         switch (modifierSelector.value) {
             case "startsWith":
                 checkName = placeName.startsWith(inputValue);
@@ -37,7 +38,7 @@ searchButton.addEventListener("click", () => {
             case "includes":
                 checkName = placeName.includes(inputValue);
                 break;
-            case "match":
+            case "matches":
                 checkName = placeName === inputValue;
                 break;
             case "regex":
@@ -45,7 +46,7 @@ searchButton.addEventListener("click", () => {
                 break;
         }
 
-        let checkOblast = false;
+        let checkOblast;
         switch (oblastSelector.value) {
             case "all":
                 checkOblast = true;
@@ -55,7 +56,7 @@ searchButton.addEventListener("click", () => {
                 break;
         }
 
-        let checkObshtina = false;
+        let checkObshtina;
         switch (obshtinaSelector.value) {
             case "all":
                 checkObshtina = true;
@@ -79,46 +80,59 @@ searchButton.addEventListener("click", () => {
                 continue;
             }
 
-            const listEntry = document.createElement("li");
-            let assembledString = "";
-            if (displayType.checked) {
-                assembledString += `${place.type} `;
-            }
-            assembledString += place.name;
-            if (displayOblast.checked) {
-                assembledString += ` (обл. ${place.oblast_name})`;
-            }
-            listEntry.textContent = assembledString;
-            if (displayWiki.checked) {
-                const wikiLink = document.createElement("a");
-                wikiLink.href = `https://bg.wikipedia.org/wiki/${place.name}`;
-                wikiLink.target = "_blank";
-                wikiLink.innerHTML = '<img src="wikipedia.ico">';
-                listEntry.append(wikiLink);
-            }
-            placesList.append(listEntry);
+            placesList.style.display = "block";
+            const placeEntry = document.createElement("tr");
+
+            const No = document.createElement("td");
+            No.classList.add("number");
+            No.textContent = ++matchedNumber;
+            placeEntry.append(No);
+
+            ["type", "name", "obshtina_name", "oblast_name", "height"].forEach((key) => {
+                const col = document.createElement("td");
+                col.textContent = place[key];
+                col.classList.add(key);
+                placeEntry.append(col);
+            });
+
+            const wikiLink = document.createElement("td");
+            wikiLink.classList.add("wiki_link");
+            const anchor = document.createElement("a");
+            anchor.href = `https://bg.wikipedia.org/wiki/${place.name}`;
+            anchor.target = "_blank";
+
+            const img = document.createElement("img");
+            img.src = "wikipedia.png";
+            anchor.append(img);
+            
+            wikiLink.append(anchor);
+            placeEntry.append(wikiLink);
+
+            placesList.append(placeEntry);
         }
     }
 
-    numberOfResults.textContent =
-        placesList.childElementCount === 1
-            ? "1 резултат"
-            : `${placesList.childElementCount} резултата`;
+    if (matchedNumber === 0 && placesList.style.display !== "none") {
+        placesList.style.display = "none";
+    }
 
-    const percentOfTotal = ((placesList.childElementCount / places.length) * 100).toFixed(2);
+    numberOfResults.textContent =
+        matchedNumber === 1 ? "1 резултат" : `${matchedNumber} резултата`;
+
+    const percentOfTotal = ((matchedNumber / places.length) * 100).toFixed(2);
     numberOfResults.textContent += ` (${percentOfTotal}% в страната`;
 
-    if (oblastSelector.value != "all") {
+    if (oblastSelector.value !== "all") {
         const percentOfOblast = (
-            (placesList.childElementCount /
+            (matchedNumber /
                 places.filter((e) => e.oblast_name === oblastSelector.value).length) *
             100
         ).toFixed(2);
         numberOfResults.textContent += `, ${percentOfOblast}% в областта`;
     }
-    if (obshtinaSelector.value != "all") {
+    if (obshtinaSelector.value !== "all") {
         const percentOfObshtina = (
-            (placesList.childElementCount /
+            (matchedNumber /
                 places.filter(
                     (e) =>
                         e.oblast_name === oblastSelector.value &&
@@ -182,23 +196,9 @@ clearButton.addEventListener("click", () => {
         checkBox.checked = Boolean(checkBox.attributes.checked);
     }
 
-    for (const elem of $$("#results > *")) {
-        elem.innerHTML = "";
+    numberOfResults.textContent = "";
+    while (placesList.childElementCount > 1) {
+        placesList.lastChild.remove();
     }
+    placesList.style.display = "none";
 });
-
-// addOblast.addEventListener("click", () => {
-//     const oblastSelector = document.createElement("select");
-//     oblastSelector.classList.add("oblastSelector");
-//     oblasts.forEach((oblast) => {
-//         const option = document.createElement("option");
-//         option.textContent = oblast;
-//         oblastSelector.append(option);
-//     });
-
-//     const obshtinaSelector = document.createElement("select");
-//     obshtinaSelector.classList.add("obshtinaSelector");
-
-//     // $("#br1").after(select);
-//     // select.after(document.createElement("br"));
-// });

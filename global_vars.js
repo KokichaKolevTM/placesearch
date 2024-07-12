@@ -10,7 +10,7 @@ const oblastSelector = $("#mainOblastSelector");
 const typeSelector = $("#mainTypeSelector");
 const obshtinaSelector = $("#mainObshtinaSelector");
 const numberOfResults = $("#numberOfResults");
-const placesList = $("#places");
+const placesList = $("#placesList");
 const displayOblast = $("#displayOblast");
 const displayType = $("#displayType");
 const displayWiki = $("#displayWiki");
@@ -49,4 +49,4 @@ const keyMatches = {
     "\\": "ь",
 };
 
-const oblasts = new Set(places.map((place) => place.oblast_name).toSorted());
+// const oblasts = new Set(places.map((place) => place.oblast_name).toSorted());
