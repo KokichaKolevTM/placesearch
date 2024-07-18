@@ -80,7 +80,7 @@ searchButton.addEventListener("click", () => {
                 continue;
             }
 
-            placesList.style.display = "block";
+            placesList.removeAttribute("style");
             const placeEntry = document.createElement("tr");
 
             const No = document.createElement("td");
@@ -104,7 +104,7 @@ searchButton.addEventListener("click", () => {
             const img = document.createElement("img");
             img.src = "wikipedia.png";
             anchor.append(img);
-            
+
             wikiLink.append(anchor);
             placeEntry.append(wikiLink);
 

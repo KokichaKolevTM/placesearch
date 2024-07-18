@@ -10,10 +10,9 @@ body {
 
 #placesList {
     margin-top: 0.4rem;
-    border-collapse: collapse;
-    letter-spacing: 0.3px;
     margin-bottom: 1rem;
-    border-radius: 8px;
+    border-collapse: collapse;
+    letter-spacing: 0.01875rem;
     width: fit-content;
 }
 
@@ -39,7 +38,7 @@ td {
     display: flex;
     width: fit-content;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     gap: 0.875rem;
     margin-bottom: 0.75rem;
     flex-wrap: wrap;
@@ -52,10 +51,30 @@ td {
     align-items: flex-start;
     width: fit-content;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
     border-radius: 10px;
     border: 1.5px solid #9b9b9e;
-    /* padding: 0.8rem; */
+}
+
+.wiki_link img {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 5px;
+    background-color: white;
+    padding: 0.1rem;
+    border: 1px solid rgba(0, 0, 0, 50%);
+}
+
+.wiki_link img:hover {
+    background-color: hsl(0, 0%, 90%);
+}
+
+.wiki_link img:active {
+    background-color: hsl(0, 0%, 80%);
+}
+
+:is(th, td).height {
+    max-width: 9rem;
 }
 
 #options label[for] {
@@ -100,15 +119,6 @@ button:disabled {
     margin-left: 1.55rem;
 }
 
-.wiki_link img {
-    width: 1.3rem;
-    height: 1.3rem;
-    border-radius: 5px;
-    background-color: white;
-    padding: 0.1rem;
-    border: 1px solid rgba(0, 0, 0, 45%);
-}
-
 #inputField {
     border: 1.5px solid #cac2c2;
     border-radius: 7px;
@@ -132,10 +142,9 @@ input[type="checkbox"]:active {
     accent-color: hsl(212, 58%, 19%);
 }
 
-/* select[id] {
-    appearance: none;
-    padding: 0.4rem 2.5rem 0.4rem 0.7rem;
-    background-color: white;
+select[id] {
+    padding: 0.3rem 0.7rem;
+    background-color: hsl(0, 24%, 96%);
     border: 1.5px solid #cac2c2;
     border-radius: 7px;
     color: black;
@@ -147,4 +156,4 @@ select:hover {
 
 select:active {
     background-color: hsl(0, 0%, 80%);
-} */
+}
