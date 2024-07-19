@@ -46,27 +46,20 @@ searchButton.addEventListener("click", () => {
                 break;
         }
 
-        let checkOblast;
-        switch (oblastSelector.value) {
-            case "all":
-                checkOblast = true;
-                break;
-            default:
-                checkOblast = place.oblast_name === oblastSelector.value;
-                break;
-        }
+        const checkOblast =
+            oblastSelector.value === "all" ? true : place.oblast_name === oblastSelector.value;
 
-        let checkObshtina;
-        switch (obshtinaSelector.value) {
-            case "all":
-                checkObshtina = true;
-                break;
-            default:
-                checkObshtina = place.obshtina_name === obshtinaSelector.value;
-                break;
-        }
+        const checkObshtina =
+            obshtinaSelector.value === "all"
+                ? true
+                : place.obshtina_name === obshtinaSelector.value;
 
-        if (checkType && checkName && checkOblast && checkObshtina) {
+        const checkHeight =
+            heightSelector.value === "all"
+                ? true
+                : place.height + " м." === heightSelector.value;
+
+        if (checkType && checkName && checkOblast && checkObshtina && checkHeight) {
             let checkDuplicate = true;
             if (displayDuplicates.checked) {
                 checkDuplicate =
@@ -148,15 +141,6 @@ searchButton.addEventListener("click", () => {
 input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         searchButton.click();
-    } else if (
-        /^[a-zA-Z`\[\]\\]$/.test(event.key) &&
-        event.ctrlKey === false &&
-        event.altKey === false &&
-        event.metaKey === false &&
-        modifierSelector.value !== "regex"
-    ) {
-        input.value += keyMatches[event.key.toLowerCase()];
-        event.preventDefault();
     }
 });
 

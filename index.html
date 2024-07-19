@@ -5,6 +5,7 @@
    <meta charset="UTF-8">
    <link rel="icon" href="icon.png">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="color-scheme" content="light">
    <title>Търсач на селища</title>
    <link rel="stylesheet" href="styles.css">
    <script src="places.js"></script>
@@ -14,63 +15,77 @@
 
 <body>
    <div id="searchBox">
-      <section class="flex-container">
-         <select id="mainOblastSelector" class="oblastSelector">
-            <option value="all">Всички области</option>
-            <option>Благоевград</option>
-            <option>Бургас</option>
-            <option>Варна</option>
-            <option>Велико Търново</option>
-            <option>Видин</option>
-            <option>Враца</option>
-            <option>Габрово</option>
-            <option>Добрич</option>
-            <option>Кърджали</option>
-            <option>Кюстендил</option>
-            <option>Ловеч</option>
-            <option>Монтана</option>
-            <option>Пазарджик</option>
-            <option>Перник</option>
-            <option>Плевен</option>
-            <option>Пловдив</option>
-            <option>Разград</option>
-            <option>Русе</option>
-            <option>Силистра</option>
-            <option>Сливен</option>
-            <option>Смолян</option>
-            <option>София</option>
-            <option>София (столица)</option>
-            <option>Стара Загора</option>
-            <option>Търговище</option>
-            <option>Хасково</option>
-            <option>Шумен</option>
-            <option>Ямбол</option>
-         </select>
-         <select id="mainObshtinaSelector">
-            <option value="all">Всички общини</option>
-         </select>
-         <select id="mainTypeSelector">
-            <option value="all">Всички селища</option>
-            <option value="cities">Градове</option>
-            <option value="villages">Села</option>
-            <option value="monasteries">Манастирски селища</option>
-         </select>
-      </section>
+      <fieldset id="filters">
+         <legend>Филтри за търсене</legend>
+         <div class="flex-container flex-container-1">
+            <select id="mainOblastSelector" class="oblastSelector">
+               <option value="all">Всички области</option>
+               <option>Благоевград</option>
+               <option>Бургас</option>
+               <option>Варна</option>
+               <option>Велико Търново</option>
+               <option>Видин</option>
+               <option>Враца</option>
+               <option>Габрово</option>
+               <option>Добрич</option>
+               <option>Кърджали</option>
+               <option>Кюстендил</option>
+               <option>Ловеч</option>
+               <option>Монтана</option>
+               <option>Пазарджик</option>
+               <option>Перник</option>
+               <option>Плевен</option>
+               <option>Пловдив</option>
+               <option>Разград</option>
+               <option>Русе</option>
+               <option>Силистра</option>
+               <option>Сливен</option>
+               <option>Смолян</option>
+               <option>София</option>
+               <option>София (столица)</option>
+               <option>Стара Загора</option>
+               <option>Търговище</option>
+               <option>Хасково</option>
+               <option>Шумен</option>
+               <option>Ямбол</option>
+            </select>
+            <select id="mainObshtinaSelector">
+               <option value="all">Всички общини</option>
+            </select>
+            <select id="mainTypeSelector">
+               <option value="all">Всички селища</option>
+               <option value="cities">Градове</option>
+               <option value="villages">Села</option>
+               <option value="monasteries">Манастирски селища</option>
+            </select>
+            <select id="mainHeightSelector">
+               <option value="all">Всички височини</option>
+               <option>0 - 49 м.</option>
+               <option>50 - 99 м.</option>
+               <option>100 - 199 м.</option>
+               <option>200 - 299 м.</option>
+               <option>300 - 499 м.</option>
+               <option>500 - 699 м.</option>
+               <option>700 - 999 м.</option>
+               <option>1000 и повече м.</option>
+            </select>
+         </div>
 
-      <section class="flex-container">
-         <select id="modifierSelector">
-            <option value="includes">Съдържа</option>
-            <option value="startsWith">Започва с</option>
-            <option value="endsWith">Завършва на</option>
-            <option value="matches">Съвпада с</option>
-            <option value="regex">Рег. израз</option>
-         </select>
-         <input id="inputField" type="text" placeholder="Въведи текст">
-         <button id="searchButton" type="button">Търси</button>
-         <button id="clearButton" type="reset"
-            title="Изчиства всички полета и връща настройките по подразбиране">Изчисти
-            всичко</button>
-      </section>
+         <div class="flex-container flex-container-2">
+            <select id="modifierSelector">
+               <option value="includes">Съдържа</option>
+               <option value="startsWith">Започва с</option>
+               <option value="endsWith">Завършва на</option>
+               <option value="matches">Съвпада с</option>
+               <option value="regex">Рег. израз</option>
+            </select>
+            <input id="inputField" type="text" placeholder="Въведи текст">
+            <button id="searchButton" type="button">Търси</button>
+            <button id="clearButton" type="reset"
+               title="Изчиства всички полета и връща настройките по подразбиране">Изчисти
+               всичко</button>
+         </div>
+      </fieldset>
 
       <fieldset id="options">
          <legend>Опции</legend>
